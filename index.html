@@ -288,10 +288,10 @@
             font-size: 16px;
         }
         
-        /* ===== الفوتر ===== */
+        /* ===== الفوتر مع معلومات التواصل ===== */
         .footer {
             background: #f5f5f5;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
             border-top: 1px solid #e0e0e0;
             font-size: 14px;
@@ -306,6 +306,36 @@
         
         .footer a:hover {
             text-decoration: underline;
+        }
+        
+        .contact-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .whatsapp-contact {
+            background: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-contact:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+            text-decoration: none;
         }
         
         /* ===== أحجام الشاشات الصغيرة ===== */
@@ -331,6 +361,11 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
         
         /* ===== أنماط خاصة ===== */
@@ -354,6 +389,23 @@
             margin-top: 5px;
             display: none;
         }
+        
+        /* ===== مؤشر التحميل ===== */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #00796b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -372,864 +424,817 @@
         
         <!-- المحتوى الرئيسي -->
         <div class="content">
-            <!-- إرشادات عامة -->
-            <div class="alert alert-info">
-                <strong><i class="fas fa-info-circle"></i> إرشادات هامة:</strong>
-                <ul style="margin-right: 20px; margin-top: 10px;">
-                    <li>جميع الحقول المميزة بعلامة (*) إلزامية</li>
-                    <li>سوف يتم التواصل معك عبر البريد الإلكتروني والجوال</li>
-                    <li>يرجى التأكد من صحة جميع البيانات قبل الإرسال</li>
-                </ul>
-            </div>
-            
-            <!-- قسم اختيار نوع المتقدم -->
-            <div class="form-section">
-                <div class="section-title">
-                    <i class="fas fa-user-graduate"></i>
-                    <span>نوع المتقدم</span>
-                </div>
-                
-                <div class="applicant-type-container">
-                    <div class="applicant-type selected" data-type="new">
-                        <i class="fas fa-user-plus"></i>
-                        <h3>خريج ثانوي جديد</h3>
-                        <p>التقديم للمرة الأولى على الكلية التقنية</p>
-                    </div>
-                    
-                    <div class="applicant-type" data-type="current">
-                        <i class="fas fa-user-check"></i>
-                        <h3>طالب حالّي</h3>
-                        <p>طالب مسجل حالياً في الكلية (ترم ثاني)</p>
-                    </div>
-                    
-                    <div class="applicant-type" data-type="transfer">
-                        <i class="fas fa-exchange-alt"></i>
-                        <h3>منقول من جامعة أخرى</h3>
-                        <p>نقل من كلية أو جامعة أخرى</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- نموذج التسجيل -->
-            <form id="registrationForm" action="https://formspree.io/f/xrbnlnee" method="POST">
-                <input type="hidden" name="_subject" value="طلب تسجيل جديد - الكلية التقنية">
-                <input type="hidden" name="نوع_المتقدم" id="applicantType" value="new">
-                
-                <!-- البيانات الشخصية -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <i class="fas fa-id-card"></i>
-                        <span>البيانات الشخصية</span>
-                    </div>
-                    
-                    <div class="form-fields-container" id="personalFields">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">الاسم الكامل (رباعي)</label>
-                                <input type="text" name="الاسم_الكامل" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">رقم الهوية / الإقامة</label>
-                                <input type="text" name="رقم_الهوية" required 
-                                       pattern="[0-9]{10,11}" 
-                                       title="10 أو 11 رقمًا فقط">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">تاريخ الميلاد (هجري)</label>
-                                <input type="text" name="تاريخ_الميلاد_هجري" required 
-                                       placeholder="هـ/يوم/شهر/سنة">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">تاريخ الميلاد (ميلادي)</label>
-                                <input type="text" name="تاريخ_الميلاد_ميلادي" required 
-                                       placeholder="سنة-شهر-يوم">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">الجنس</label>
-                                <select name="الجنس" required>
-                                    <option value="">اختر الجنس</option>
-                                    <option value="ذكر">ذكر</option>
-                                    <option value="أنثى">أنثى</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">الجنسية</label>
-                                <input type="text" name="الجنسية" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">الحالة الاجتماعية</label>
-                                <select name="الحالة_الاجتماعية" required>
-                                    <option value="">اختر الحالة</option>
-                                    <option value="أعزب">أعزب</option>
-                                    <option value="متزوج">متزوج</option>
-                                    <option value="مطلق">مطلق</option>
-                                    <option value="أرمل">أرمل</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- بيانات الاتصال -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <i class="fas fa-address-book"></i>
-                        <span>بيانات الاتصال</span>
-                    </div>
-                    
-                    <div class="form-fields-container">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">رقم الجوال</label>
-                                <input type="tel" name="رقم_الجوال" required 
-                                       pattern="05[0-9]{8}"
-                                       placeholder="05xxxxxxxx">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">البريد الإلكتروني</label>
-                                <input type="email" name="البريد_الإلكتروني" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">المنطقة</label>
-                                <select name="المنطقة" required>
-                                    <option value="">اختر المنطقة</option>
-                                    <!-- جميع مناطق المملكة -->
-                                    <option value="الرياض">الرياض</option>
-                                    <option value="مكة المكرمة">مكة المكرمة</option>
-                                    <option value="المدينة المنورة">المدينة المنورة</option>
-                                    <option value="الشرقية">المنطقة الشرقية</option>
-                                    <option value="القصيم">القصيم</option>
-                                    <option value="عسير">عسير</option>
-                                    <option value="تبوك">تبوك</option>
-                                    <option value="حائل">حائل</option>
-                                    <option value="الحدود الشمالية">الحدود الشمالية</option>
-                                    <option value="جازان">جازان</option>
-                                    <option value="نجران">نجران</option>
-                                    <option value="الباحة">الباحة</option>
-                                    <option value="الجوف">الجوف</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">المدينة</label>
-                                <select name="المدينة" required>
-                                    <option value="">اختر المدينة</option>
-                                    <!-- مدن الرياض -->
-                                    <optgroup label="منطقة الرياض">
-                                        <option value="الرياض">الرياض</option>
-                                        <option value="الدرعية">الدرعية</option>
-                                        <option value="الخرج">الخرج</option>
-                                        <option value="الدوادمي">الدوادمي</option>
-                                        <option value="المجمعة">المجمعة</option>
-                                        <option value="القويعية">القويعية</option>
-                                        <option value="الأفلاج">الأفلاج</option>
-                                        <option value="وادي الدواسر">وادي الدواسر</option>
-                                    </optgroup>
-                                    <!-- مدن مكة المكرمة -->
-                                    <optgroup label="منطقة مكة المكرمة">
-                                        <option value="مكة المكرمة">مكة المكرمة</option>
-                                        <option value="جدة">جدة</option>
-                                        <option value="الطائف">الطائف</option>
-                                        <option value="القنفذة">القنفذة</option>
-                                        <option value="الليث">الليث</option>
-                                        <option value="رابغ">رابغ</option>
-                                        <option value="خليص">خليص</option>
-                                    </optgroup>
-                                    <!-- مدن المدينة المنورة -->
-                                    <optgroup label="منطقة المدينة المنورة">
-                                        <option value="المدينة المنورة">المدينة المنورة</option>
-                                        <option value="ينبع">ينبع</option>
-                                        <option value="العلا">العلا</option>
-                                        <option value="المهد">المهد</option>
-                                        <option value="خيبر">خيبر</option>
-                                    </optgroup>
-                                    <!-- مدن المنطقة الشرقية -->
-                                    <optgroup label="المنطقة الشرقية">
-                                        <option value="الدمام">الدمام</option>
-                                        <option value="الخبر">الخبر</option>
-                                        <option value="الظهران">الظهران</option>
-                                        <option value="الأحساء">الأحساء</option>
-                                        <option value="القطيف">القطيف</option>
-                                        <option value="بقيق">بقيق</option>
-                                        <option value="حفر الباطن">حفر الباطن</option>
-                                        <option value="الجبيل">الجبيل</option>
-                                        <option value="النعيرية">النعيرية</option>
-                                    </optgroup>
-                                    <!-- مدن أخرى -->
-                                    <optgroup label="مدن أخرى">
-                                        <option value="أبها">أبها</option>
-                                        <option value="الباحة">الباحة</option>
-                                        <option value="تبوك">تبوك</option>
-                                        <option value="جازان">جازان</option>
-                                        <option value="حائل">حائل</option>
-                                        <option value="سكاكا">سكاكا</option>
-                                        <option value="عرعر">عرعر</option>
-                                        <option value="نجران">نجران</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="required">العنوان التفصيلي</label>
-                            <textarea name="العنوان_التفصيلي" rows="3" required></textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- البيانات الأكاديمية -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>البيانات الأكاديمية</span>
-                    </div>
-                    
-                    <!-- حقل ثانوي جديد -->
-                    <div class="form-fields-container" id="newStudentFields">
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <strong>لخريجي الثانوية:</strong> يجب إدخال بيانات الثانوية بالكامل
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">نوع المؤهل</label>
-                                <select name="نوع_المؤهل" required>
-                                    <option value="">اختر نوع المؤهل</option>
-                                    <option value="ثانوية عامة">ثانوية عامة</option>
-                                    <option value="ثانوية تجارية">ثانوية تجارية</option>
-                                    <option value="ثانوية صناعية">ثانوية صناعية</option>
-                                    <option value="ثانوية زراعية">ثانوية زراعية</option>
-                                    <option value="ثانوية فندقية">ثانوية فندقية</option>
-                                    <option value="ثانوية صحية">ثانوية صحية</option>
-                                    <option value="ثانوية شرعية">ثانوية شرعية</option>
-                                    <option value="ثانوية تحفيظ القرآن">ثانوية تحفيظ القرآن</option>
-                                    <option value="ثانوية معهد الأئمة والخطباء">ثانوية معهد الأئمة والخطباء</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">تخصص الثانوية</label>
-                                <select name="تخصص_الثانوية" required>
-                                    <option value="">اختر التخصص</option>
-                                    <optgroup label="العلمي">
-                                        <option value="علمي طبيعي">علمي طبيعي</option>
-                                        <option value="علمي حاسب آلي">علمي حاسب آلي</option>
-                                        <option value="علمي هندسي">علمي هندسي</option>
-                                    </optgroup>
-                                    <optgroup label="الأدبي">
-                                        <option value="أدبي إداري">أدبي إداري</option>
-                                        <option value="أدبي قانوني">أدبي قانوني</option>
-                                        <option value="أدبي شرعي">أدبي شرعي</option>
-                                        <option value="أدبي لغات">أدبي لغات</option>
-                                    </optgroup>
-                                    <optgroup label="التقني">
-                                        <option value="تقني كهرباء">تقني كهرباء</option>
-                                        <option value="تقني ميكانيكا">تقني ميكانيكا</option>
-                                        <option value="تقني إلكترونيات">تقني إلكترونيات</option>
-                                        <option value="تقني حاسب آلي">تقني حاسب آلي</option>
-                                        <option value="تقني بناء وتشييد">تقني بناء وتشييد</option>
-                                        <option value="تقني تدفئة وتكييف">تقني تدفئة وتكييف</option>
-                                        <option value="تقني سيارات">تقني سيارات</option>
-                                    </optgroup>
-                                    <optgroup label="الإداري والتجاري">
-                                        <option value="إدارة أعمال">إدارة أعمال</option>
-                                        <option value="محاسبة">محاسبة</option>
-                                        <option value="سكرتارية">سكرتارية</option>
-                                        <option value="تسويق">تسويق</option>
-                                    </optgroup>
-                                    <optgroup label="الصحي">
-                                        <option value="صحي تمريض">صحي تمريض</option>
-                                        <option value="صحي صيدلة">صحي صيدلة</option>
-                                        <option value="صحي مختبرات">صحي مختبرات</option>
-                                        <option value="صحي أشعة">صحي أشعة</option>
-                                    </optgroup>
-                                    <optgroup label="الزراعي">
-                                        <option value="زراعي عام">زراعي عام</option>
-                                        <option value="إنتاج حيواني">إنتاج حيواني</option>
-                                        <option value="إنتاج نباتي">إنتاج نباتي</option>
-                                    </optgroup>
-                                    <optgroup label="الفندقي">
-                                        <option value="فندقي وسياحة">فندقي وسياحة</option>
-                                        <option value="إدارة المطاعم">إدارة المطاعم</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">سنة التخرج (هجري)</label>
-                                <input type="text" name="سنة_التخرج_هجري" required 
-                                       placeholder="هـ 1445">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">المعدل / النسبة</label>
-                                <input type="number" name="المعدل" step="0.01" min="50" max="100" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>درجة اختبار القدرات</label>
-                                <input type="number" name="درجة_القدرات" step="0.01" min="0" max="100">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>درجة اختبار التحصيلي</label>
-                                <input type="number" name="درجة_التحصيلي" step="0.01" min="0" max="100">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- حقل طالب حالّي -->
-                    <div class="form-fields-container hidden" id="currentStudentFields">
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>للطلاب الحاليين:</strong> أدخل بياناتك الحالية في الكلية
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">الرقم الأكاديمي</label>
-                                <input type="text" name="الرقم_الأكاديمي_حالي" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">الفصل الحالي</label>
-                                <input type="text" name="الفصل_الحالي" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">المعدل التراكمي</label>
-                                <input type="number" name="المعدل_التراكمي_حالي" step="0.01" min="0" max="5" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="required">التخصص الحالي</label>
-                            <select name="التخصص_الحالي" required>
-                                <option value="">اختر التخصص الحالي</option>
-                                <!-- نفس تخصصات الكلية التقنية -->
-                                <optgroup label="التقنية الإدارية">
-                                    <option value="إدارة مكتبية">إدارة مكتبية</option>
-                                    <option value="محاسبة">محاسبة</option>
-                                    <option value="إدارة سجلات طبية">إدارة سجلات طبية</option>
-                                </optgroup>
-                                <optgroup label="الحاسب وتقنية المعلومات">
-                                    <option value="دعم فني">دعم فني</option>
-                                    <option value="شبكات">شبكات</option>
-                                    <option value="برمجة">برمجة</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- حقل منقول -->
-                    <div class="form-fields-container hidden" id="transferStudentFields">
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <strong>للمنقولين:</strong> أدخل بياناتك من الكلية السابقة
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">الكلية / الجامعة السابقة</label>
-                                <input type="text" name="الكلية_السابقة" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">التخصص السابق</label>
-                                <input type="text" name="التخصص_السابق" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">المعدل التراكمي</label>
-                                <input type="number" name="المعدل_التراكمي_نقل" step="0.01" min="0" max="5" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">الساعات المنجزة</label>
-                                <input type="number" name="الساعات_المنجزة" min="0" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- الرغبات والتخصصات -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <i class="fas fa-list-ol"></i>
-                        <span>الرغبات والتخصصات</span>
-                    </div>
-                    
-                    <div class="form-fields-container">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">الكلية التقنية المفضلة</label>
-                                <select name="الكلية_التقنية" required>
-                                    <option value="">اختر الكلية</option>
-                                    <!-- جميع كليات التقنية في المملكة -->
-                                    <optgroup label="منطقة الرياض">
-                                        <option value="الرياض">الكلية التقنية بالرياض</option>
-                                        <option value="الخرج">الكلية التقنية بالخرج</option>
-                                        <option value="الدوادمي">الكلية التقنية بالدوادمي</option>
-                                        <option value="الزلفي">الكلية التقنية بالزلفي</option>
-                                        <option value="المجمعة">الكلية التقنية بالمجمعة</option>
-                                        <option value="شقراء">الكلية التقنية بشقراء</option>
-                                        <option value="القويعية">الكلية التقنية بالقويعية</option>
-                                        <option value="وادي الدواسر">الكلية التقنية بوادي الدواسر</option>
-                                        <option value="الأفلاج">الكلية التقنية بالأفلاج</option>
-                                    </optgroup>
-                                    <optgroup label="منطقة مكة المكرمة">
-                                        <option value="مكة">الكلية التقنية بمكة المكرمة</option>
-                                        <option value="جدة">الكلية التقنية بجدة</option>
-                                        <option value="الطائف">الكلية التقنية بالطائف</option>
-                                        <option value="القنفذة">الكلية التقنية بالقنفذة</option>
-                                    </optgroup>
-                                    <optgroup label="منطقة المدينة المنورة">
-                                        <option value="المدينة">الكلية التقنية بالمدينة المنورة</option>
-                                        <option value="ينبع">الكلية التقنية بينبع</option>
-                                    </optgroup>
-                                    <optgroup label="المنطقة الشرقية">
-                                        <option value="الدمام">الكلية التقنية بالدمام</option>
-                                        <option value="الأحساء">الكلية التقنية بالأحساء</option>
-                                        <option value="الجبيل">الكلية التقنية بالجبيل</option>
-                                        <option value="بقيق">الكلية التقنية ببقيق</option>
-                                        <option value="حفر الباطن">الكلية التقنية بحفر الباطن</option>
-                                    </optgroup>
-                                    <optgroup label="منطقة القصيم">
-                                        <option value="بريدة">الكلية التقنية ببريدة</option>
-                                        <option value="عنيزة">الكلية التقنية بعنيزة</option>
-                                        <option value="المذنب">الكلية التقنية بالمذنب</option>
-                                        <option value="الرس">الكلية التقنية بالرس</option>
-                                    </optgroup>
-                                    <optgroup label="منطقة عسير">
-                                        <option value="أبها">الكلية التقنية بأبها</option>
-                                        <option value="خميس مشيط">الكلية التقنية بخميس مشيط</option>
-                                        <option value="النماص">الكلية التقنية بالنماص</option>
-                                        <option value="بللسمر">الكلية التقنية ببللسمر</option>
-                                    </optgroup>
-                                    <optgroup label="منطقة تبوك">
-                                        <option value="تبوك">الكلية التقنية بتبوك</option>
-                                        <option value="الوجه">الكلية التقنية بالوجه</option>
-                                        <option value="ضباء">الكلية التقنية بضباء</option>
-                                    </optgroup>
-                                    <optgroup label="منطقة حائل">
-                                        <option value="حائل">الكلية التقنية بحائل</option>
-                                        <option value="الغزالة">الكلية التقنية بالغزالة</option>
-                                    </optgroup>
-                                    <optgroup label="مناطق أخرى">
-                                        <option value="جازان">الكلية التقنية بجازان</option>
-                                        <option value="نجران">الكلية التقنية بنجران</option>
-                                        <option value="الباحة">الكلية التقنية بالباحة</option>
-                                        <option value="الجوف">الكلية التقنية بالجوف</option>
-                                        <option value="الحدود الشمالية">الكلية التقنية بالحدود الشمالية</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="required">نوع الدراسة</label>
-                                <select name="نوع_الدراسة" required>
-                                    <option value="">اختر نوع الدراسة</option>
-                                    <option value="منتظم">منتظم</option>
-                                    <option value="انتساب">انتساب</option>
-                                    <option value="تعليم عن بعد">تعليم عن بعد</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>ملاحظة:</strong> يرجى اختيار التخصصات المناسبة لمؤهلك وجنسك
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="required">الرغبة الأولى</label>
-                                <select name="الرغبة_الأولى" required>
-                                    <option value="">اختر التخصص</option>
-                                    <!-- التقنية الإدارية -->
-                                    <optgroup label="التقنية الإدارية">
-                                        <option value="دبلوم الإدارة المكتبية">دبلوم الإدارة المكتبية</option>
-                                        <option value="دبلوم السكرتارية الطبية">دبلوم السكرتارية الطبية</option>
-                                        <option value="دبلوم السكرتارية التنفيذية">دبلوم السكرتارية التنفيذية</option>
-                                        <option value="دبلوم إدارة المستودعات">دبلوم إدارة المستودعات</option>
-                                        <option value="دبلوم إدارة المكاتب">دبلوم إدارة المكاتب</option>
-                                        <option value="دبلوم السكرتارية وإدارة المكاتب">دبلوم السكرتارية وإدارة المكاتب</option>
-                                        <option value="دبلوم المحاسبة">دبلوم المحاسبة</option>
-                                        <option value="دبلوم المحاسبة المالية">دبلوم المحاسبة المالية</option>
-                                        <option value="دبلوم المحاسبة الضريبية">دبلوم المحاسبة الضريبية</option>
-                                        <option value="دبلوم السكرتارية والمحاسبة">دبلوم السكرتارية والمحاسبة</option>
-                                        <option value="دبلوم إدارة الأعمال">دبلوم إدارة الأعمال</option>
-                                        <option value="دبلوم التسويق">دبلوم التسويق</option>
-                                        <option value="دبلوم الإدارة المالية">دبلوم الإدارة المالية</option>
-                                    </optgroup>
-                                    <!-- الحاسب وتقنية المعلومات -->
-                                    <optgroup label="الحاسب وتقنية المعلومات">
-                                        <option value="دبلوم دعم فني للحاسب الآلي">دبلوم دعم فني للحاسب الآلي</option>
-                                        <option value="دبلوم شبكات الحاسب الآلي">دبلوم شبكات الحاسب الآلي</option>
-                                        <option value="دبلوم برمجة وتطوير الويب">دبلوم برمجة وتطوير الويب</option>
-                                        <option value="دبلوم برمجة تطبيقات الجوال">دبلوم برمجة تطبيقات الجوال</option>
-                                        <option value="دبلوم أمن المعلومات">دبلوم أمن المعلومات</option>
-                                        <option value="دبلوم قواعد البيانات">دبلوم قواعد البيانات</option>
-                                        <option value="دبلوم تحليل النظم">دبلوم تحليل النظم</option>
-                                        <option value="دبلوم إدارة شبكات">دبلوم إدارة شبكات</option>
-                                        <option value="دبلوم تطوير البرمجيات">دبلوم تطوير البرمجيات</option>
-                                        <option value="دبلوم الذكاء الاصطناعي">دبلوم الذكاء الاصطناعي</option>
-                                        <option value="دبلوم علم البيانات">دبلوم علم البيانات</option>
-                                        <option value="دبلوم أمن سيبراني">دبلوم أمن سيبراني</option>
-                                    </optgroup>
-                                    <!-- التقنية الكهربائية -->
-                                    <optgroup label="التقنية الكهربائية">
-                                        <option value="بكالوريوس القوى الكهربائية">بكالوريوس القوى الكهربائية (تطبيقي)</option>
-                                        <option value="دبلوم التركيبات الكهربائية">دبلوم التركيبات الكهربائية</option>
-                                        <option value="دبلوم صيانة الأجهزة الكهربائية">دبلوم صيانة الأجهزة الكهربائية</option>
-                                        <option value="دبلوم توزيع الطاقة الكهربائية">دبلوم توزيع الطاقة الكهربائية</option>
-                                        <option value="دبلوم التحكم الآلي">دبلوم التحكم الآلي</option>
-                                        <option value="دبلوم الإلكترونيات الصناعية">دبلوم الإلكترونيات الصناعية</option>
-                                        <option value="دبلوم الأنظمة الكهربائية في المباني">دبلوم الأنظمة الكهربائية في المباني</option>
-                                    </optgroup>
-                                    <!-- التقنية الإلكترونية -->
-                                    <optgroup label="التقنية الإلكترونية">
-                                        <option value="دبلوم الإلكترونيات الصناعية">دبلوم الإلكترونيات الصناعية</option>
-                                        <option value="دبلوم أجهزة القياس والتحكم">دبلوم أجهزة القياس والتحكم</option>
-                                        <option value="دبلوم الاتصالات الإلكترونية">دبلوم الاتصالات الإلكترونية</option>
-                                        <option value="دبلوم الأجهزة الطبية">دبلوم الأجهزة الطبية</option>
-                                        <option value="دبلوم صيانة الأجهزة الإلكترونية">دبلوم صيانة الأجهزة الإلكترونية</option>
-                                        <option value="دبلوم الأنظمة المدمجة">دبلوم الأنظمة المدمجة</option>
-                                        <option value="دبلوم التحكم الصناعي">دبلوم التحكم الصناعي</option>
-                                    </optgroup>
-                                    <!-- التقنية الميكانيكية -->
-                                    <optgroup label="التقنية الميكانيكية">
-                                        <option value="دبلوم تقنية التصنيع">دبلوم تقنية التصنيع</option>
-                                        <option value="دبلوم تقنية المحركات والمركبات">دبلوم تقنية المحركات والمركبات</option>
-                                        <option value="دبلوم تقنية التبريد وتكييف الهواء">دبلوم تقنية التبريد وتكييف الهواء</option>
-                                        <option value="دبلوم الصيانة الميكانيكية">دبلوم الصيانة الميكانيكية</option>
-                                        <option value="دبلوم اللحام">دبلوم اللحام</option>
-                                        <option value="دبلوم السباكة">دبلوم السباكة</option>
-                                        <option value="دبلوم النجارة">دبلوم النجارة</option>
-                                        <option value="دبلوم تشغيل آلات الإنتاج">دبلوم تشغيل آلات الإنتاج</option>
-                                        <option value="دبلوم صيانة المعدات الثقيلة">دبلوم صيانة المعدات الثقيلة</option>
-                                        <option value="دبلوم الميكانيكا العامة">دبلوم الميكانيكا العامة</option>
-                                    </optgroup>
-                                    <!-- التقنية المدنية والمعمارية -->
-                                    <optgroup label="التقنية المدنية والمعمارية">
-                                        <option value="دبلوم تقنية المساحة">دبلوم تقنية المساحة</option>
-                                        <option value="دبلوم الرسم المعماري">دبلوم الرسم المعماري</option>
-                                        <option value="دبلوم الإنشاءات المدنية">دبلوم الإنشاءات المدنية</option>
-                                        <option value="دبلوم التخطيط العمراني">دبلوم التخطيط العمراني</option>
-                                        <option value="دبلوم الدهانات والديكور">دبلوم الدهانات والديكور</option>
-                                        <option value="دبلوم التشطيبات المعمارية">دبلوم التشطيبات المعمارية</option>
-                                        <option value="دبلوم التصميم الداخلي">دبلوم التصميم الداخلي</option>
-                                        <option value="دبلوم البناء والتشييد">دبلوم البناء والتشييد</option>
-                                    </optgroup>
-                                    <!-- تخصصات البنات -->
-                                    <optgroup label="تخصصات البنات">
-                                        <option value="دبلوم السياحة والفنادق">دبلوم السياحة والفنادق</option>
-                                        <option value="دبلوم إدارة الفعاليات">دبلوم إدارة الفعاليات</option>
-                                        <option value="دبلوم التسويق الرقمي">دبلوم التسويق الرقمي</option>
-                                        <option value="دبلوم التصميم الجرافيكي">دبلوم التصميم الجرافيكي</option>
-                                        <option value="دبلوم إدارة الأعمال الصغيرة">دبلوم إدارة الأعمال الصغيرة</option>
-                                        <option value="دبلوم التجميل والعناية بالبشرة">دبلوم التجميل والعناية بالبشرة</option>
-                                        <option value="دبلوم تصميم الأزياء">دبلوم تصميم الأزياء</option>
-                                        <option value="دبلوم الخياطة والتطريز">دبلوم الخياطة والتطريز</option>
-                                        <option value="دبلوم التغذية الصحية">دبلوم التغذية الصحية</option>
-                                        <option value="دبلوم رعاية الطفل">دبلوم رعاية الطفل</option>
-                                        <option value="دبلوم الإرشاد الأسري">دبلوم الإرشاد الأسري</option>
-                                        <option value="دبلوم التربية الخاصة">دبلوم التربية الخاصة</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>الرغبة الثانية (اختياري)</label>
-                                <select name="الرغبة_الثانية">
-                                    <option value="">اختياري</option>
-                                    <!-- نفس الخيارات السابقة -->
-                                    <optgroup label="التقنية الإدارية">
-                                        <option value="دبلوم الإدارة المكتبية">دبلوم الإدارة المكتبية</option>
-                                        <option value="دبلوم المحاسبة">دبلوم المحاسبة</option>
-                                        <option value="دبلوم إدارة الأعمال">دبلوم إدارة الأعمال</option>
-                                    </optgroup>
-                                    <optgroup label="الحاسب وتقنية المعلومات">
-                                        <option value="دبلوم دعم فني للحاسب الآلي">دبلوم دعم فني للحاسب الآلي</option>
-                                        <option value="دبلوم شبكات الحاسب الآلي">دبلوم شبكات الحاسب الآلي</option>
-                                        <option value="دبلوم برمجة وتطوير الويب">دبلوم برمجة وتطوير الويب</option>
-                                    </optgroup>
-                                    <optgroup label="التقنية الكهربائية">
-                                        <option value="دبلوم التركيبات الكهربائية">دبلوم التركيبات الكهربائية</option>
-                                        <option value="دبلوم توزيع الطاقة الكهربائية">دبلوم توزيع الطاقة الكهربائية</option>
-                                    </optgroup>
-                                    <optgroup label="التقنية الميكانيكية">
-                                        <option value="دبلوم تقنية التصنيع">دبلوم تقنية التصنيع</option>
-                                        <option value="دبلوم تقنية المحركات والمركبات">دبلوم تقنية المحركات والمركبات</option>
-                                    </optgroup>
-                                    <optgroup label="تخصصات البنات">
-                                        <option value="دبلوم السياحة والفنادق">دبلوم السياحة والفنادق</option>
-                                        <option value="دبلوم التصميم الجرافيكي">دبلوم التصميم الجرافيكي</option>
-                                        <option value="دبلوم تصميم الأزياء">دبلوم تصميم الأزياء</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- الشروط -->
-                <div class="alert alert-info">
-                    <div style="display: flex; align-items: flex-start; gap: 10px;">
-                        <input type="checkbox" id="agreeTerms" name="agree_terms" required style="width: auto; margin-top: 5px;">
-                        <label for="agreeTerms" style="margin: 0; font-weight: normal;">
-                            أوافق على جميع الشروط والأحكام، وأقر بصحة المعلومات المقدمة، وأعلم أن أي بيانات غير صحيحة قد تؤدي إلى إلغاء القبول
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- زر الإرسال -->
-                <div class="button-container">
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <i class="fas fa-paper-plane"></i>
-                        تقديم طلب التسجيل
-                    </button>
-                </div>
-            </form>
-            
-            <!-- رسالة النجاح -->
+            <!-- رسالة النجاح (ستظهر بعد الإرسال) -->
             <div class="success-message" id="successMessage">
                 <i class="fas fa-check-circle"></i>
-                <h2>تم تقديم طلبك بنجاح!</h2>
-                <p>تم استلام طلب التسجيل الخاص بك</p>
-                <p>سوف يتم التواصل معك عبر البريد الإلكتروني والجوال</p>
-                <p>رقم الطلب: <strong id="requestNumber"></strong></p>
-                <p style="margin-top: 20px; font-size: 14px; color: #666;">
-                    يمكنك متابعة حالة الطلب عبر البريد الإلكتروني
-                </p>
+                <h2>تم إرسال طلبك بنجاح!</h2>
+                <p>شكراً لك على تقديم طلب التسجيل.</p>
+                <p>سيتم التواصل معك في أقرب وقت من قبل موظف الشؤون الإدارية والمالية.</p>
+                <p>يرجى متابعة بريدك الإلكتروني للاطلاع على التحديثات.</p>
+            </div>
+            
+            <!-- النموذج (سيتم إخفاؤه بعد الإرسال الناجح) -->
+            <div id="formContainer">
+                <!-- إرشادات عامة -->
+                <div class="alert alert-info">
+                    <strong><i class="fas fa-info-circle"></i> إرشادات هامة:</strong>
+                    <ul style="margin-right: 20px; margin-top: 10px;">
+                        <li>جميع الحقول المميزة بعلامة (*) إلزامية</li>
+                        <li>سوف يتم التواصل معك عبر البريد الإلكتروني والجوال</li>
+                        <li>يرجى التأكد من صحة جميع البيانات قبل الإرسال</li>
+                    </ul>
+                </div>
+                
+                <!-- قسم اختيار نوع المتقدم -->
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>نوع المتقدم</span>
+                    </div>
+                    
+                    <div class="applicant-type-container">
+                        <div class="applicant-type selected" data-type="new">
+                            <i class="fas fa-user-plus"></i>
+                            <h3>خريج ثانوي جديد</h3>
+                            <p>التقديم للمرة الأولى على الكلية التقنية</p>
+                        </div>
+                        
+                        <div class="applicant-type" data-type="current">
+                            <i class="fas fa-user-check"></i>
+                            <h3>طالب حالّي</h3>
+                            <p>طالب مسجل حالياً في الكلية (ترم ثاني)</p>
+                        </div>
+                        
+                        <div class="applicant-type" data-type="transfer">
+                            <i class="fas fa-exchange-alt"></i>
+                            <h3>منقول من جامعة أخرى</h3>
+                            <p>نقل من كلية أو جامعة أخرى</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- نموذج التسجيل -->
+                <form id="registrationForm" action="https://formspree.io/f/xrbnlnee" method="POST">
+                    <input type="hidden" name="_subject" value="طلب تسجيل جديد - الكلية التقنية">
+                    <input type="hidden" name="_replyto" id="replyToEmail">
+                    <input type="hidden" name="_language" value="ar">
+                    <input type="hidden" name="نوع_المتقدم" id="applicantType" value="new">
+                    
+                    <!-- البيانات الشخصية -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-id-card"></i>
+                            <span>البيانات الشخصية</span>
+                        </div>
+                        
+                        <div class="form-fields-container" id="personalFields">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">الاسم الكامل (رباعي)</label>
+                                    <input type="text" name="الاسم_الكامل" id="fullName" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">رقم الهوية / الإقامة</label>
+                                    <input type="text" name="رقم_الهوية" id="idNumber" required 
+                                           pattern="[0-9]{10,11}" 
+                                           title="10 أو 11 رقمًا فقط">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">تاريخ الميلاد (هجري)</label>
+                                    <input type="text" name="تاريخ_الميلاد_هجري" required 
+                                           placeholder="هـ/يوم/شهر/سنة">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">تاريخ الميلاد (ميلادي)</label>
+                                    <input type="text" name="تاريخ_الميلاد_ميلادي" required 
+                                           placeholder="سنة-شهر-يوم">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">الجنس</label>
+                                    <select name="الجنس" id="gender" required>
+                                        <option value="">اختر الجنس</option>
+                                        <option value="ذكر">ذكر</option>
+                                        <option value="أنثى">أنثى</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">الجنسية</label>
+                                    <input type="text" name="الجنسية" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">الحالة الاجتماعية</label>
+                                    <select name="الحالة_الاجتماعية" required>
+                                        <option value="">اختر الحالة</option>
+                                        <option value="أعزب">أعزب</option>
+                                        <option value="متزوج">متزوج</option>
+                                        <option value="مطلق">مطلق</option>
+                                        <option value="أرمل">أرمل</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- بيانات الاتصال -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-address-book"></i>
+                            <span>بيانات الاتصال</span>
+                        </div>
+                        
+                        <div class="form-fields-container">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">رقم الجوال</label>
+                                    <input type="tel" name="رقم_الجوال" id="phoneNumber" required 
+                                           pattern="05[0-9]{8}"
+                                           placeholder="05xxxxxxxx">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">البريد الإلكتروني</label>
+                                    <input type="email" name="البريد_الإلكتروني" id="email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">المنطقة</label>
+                                    <select name="المنطقة" id="region" required>
+                                        <option value="">اختر المنطقة</option>
+                                        <!-- جميع مناطق المملكة -->
+                                        <option value="الرياض">الرياض</option>
+                                        <option value="مكة المكرمة">مكة المكرمة</option>
+                                        <option value="المدينة المنورة">المدينة المنورة</option>
+                                        <option value="الشرقية">المنطقة الشرقية</option>
+                                        <option value="القصيم">القصيم</option>
+                                        <option value="عسير">عسير</option>
+                                        <option value="تبوك">تبوك</option>
+                                        <option value="حائل">حائل</option>
+                                        <option value="الحدود الشمالية">الحدود الشمالية</option>
+                                        <option value="جازان">جازان</option>
+                                        <option value="نجران">نجران</option>
+                                        <option value="الباحة">الباحة</option>
+                                        <option value="الجوف">الجوف</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">المدينة</label>
+                                    <select name="المدينة" required>
+                                        <option value="">اختر المدينة</option>
+                                        <!-- مدن الرياض -->
+                                        <optgroup label="منطقة الرياض">
+                                            <option value="الرياض">الرياض</option>
+                                            <option value="الدرعية">الدرعية</option>
+                                            <option value="الخرج">الخرج</option>
+                                            <option value="الدوادمي">الدوادمي</option>
+                                            <option value="المجمعة">المجمعة</option>
+                                            <option value="القويعية">القويعية</option>
+                                            <option value="الأفلاج">الأفلاج</option>
+                                            <option value="وادي الدواسر">وادي الدواسر</option>
+                                        </optgroup>
+                                        <!-- مدن مكة المكرمة -->
+                                        <optgroup label="منطقة مكة المكرمة">
+                                            <option value="مكة المكرمة">مكة المكرمة</option>
+                                            <option value="جدة">جدة</option>
+                                            <option value="الطائف">الطائف</option>
+                                            <option value="القنفذة">القنفذة</option>
+                                            <option value="الليث">الليث</option>
+                                            <option value="رابغ">رابغ</option>
+                                            <option value="خليص">خليص</option>
+                                        </optgroup>
+                                        <!-- مدن المدينة المنورة -->
+                                        <optgroup label="منطقة المدينة المنورة">
+                                            <option value="المدينة المنورة">المدينة المنورة</option>
+                                            <option value="ينبع">ينبع</option>
+                                            <option value="العلا">العلا</option>
+                                            <option value="المهد">المهد</option>
+                                            <option value="خيبر">خيبر</option>
+                                        </optgroup>
+                                        <!-- مدن المنطقة الشرقية -->
+                                        <optgroup label="المنطقة الشرقية">
+                                            <option value="الدمام">الدمام</option>
+                                            <option value="الخبر">الخبر</option>
+                                            <option value="الظهران">الظهران</option>
+                                            <option value="الأحساء">الأحساء</option>
+                                            <option value="القطيف">القطيف</option>
+                                            <option value="بقيق">بقيق</option>
+                                            <option value="حفر الباطن">حفر الباطن</option>
+                                            <option value="الجبيل">الجبيل</option>
+                                            <option value="النعيرية">النعيرية</option>
+                                        </optgroup>
+                                        <!-- مدن أخرى -->
+                                        <optgroup label="مدن أخرى">
+                                            <option value="أبها">أبها</option>
+                                            <option value="الباحة">الباحة</option>
+                                            <option value="تبوك">تبوك</option>
+                                            <option value="جازان">جازان</option>
+                                            <option value="حائل">حائل</option>
+                                            <option value="سكاكا">سكاكا</option>
+                                            <option value="عرعر">عرعر</option>
+                                            <option value="نجران">نجران</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required">العنوان التفصيلي</label>
+                                <textarea name="العنوان_التفصيلي" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- البيانات الأكاديمية -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>البيانات الأكاديمية</span>
+                        </div>
+                        
+                        <!-- حقل ثانوي جديد -->
+                        <div class="form-fields-container" id="newStudentFields">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>لخريجي الثانوية:</strong> يجب إدخال بيانات الثانوية بالكامل
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">نوع المؤهل</label>
+                                    <select name="نوع_المؤهل" required>
+                                        <option value="">اختر نوع المؤهل</option>
+                                        <option value="ثانوية عامة">ثانوية عامة</option>
+                                        <option value="ثانوية تجارية">ثانوية تجارية</option>
+                                        <option value="ثانوية صناعية">ثانوية صناعية</option>
+                                        <option value="ثانوية زراعية">ثانوية زراعية</option>
+                                        <option value="ثانوية فندقية">ثانوية فندقية</option>
+                                        <option value="ثانوية صحية">ثانوية صحية</option>
+                                        <option value="ثانوية شرعية">ثانوية شرعية</option>
+                                        <option value="ثانوية تحفيظ القرآن">ثانوية تحفيظ القرآن</option>
+                                        <option value="ثانوية معهد الأئمة والخطباء">ثانوية معهد الأئمة والخطباء</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">تخصص الثانوية</label>
+                                    <select name="تخصص_الثانوية" required>
+                                        <option value="">اختر التخصص</option>
+                                        <optgroup label="العلمي">
+                                            <option value="علمي طبيعي">علمي طبيعي</option>
+                                            <option value="علمي حاسب آلي">علمي حاسب آلي</option>
+                                            <option value="علمي هندسي">علمي هندسي</option>
+                                        </optgroup>
+                                        <optgroup label="الأدبي">
+                                            <option value="أدبي إداري">أدبي إداري</option>
+                                            <option value="أدبي قانوني">أدبي قانوني</option>
+                                            <option value="أدبي شرعي">أدبي شرعي</option>
+                                            <option value="أدبي لغات">أدبي لغات</option>
+                                        </optgroup>
+                                        <optgroup label="التقني">
+                                            <option value="تقني كهرباء">تقني كهرباء</option>
+                                            <option value="تقني ميكانيكا">تقني ميكانيكا</option>
+                                            <option value="تقني إلكترونيات">تقني إلكترونيات</option>
+                                            <option value="تقني حاسب آلي">تقني حاسب آلي</option>
+                                            <option value="تقني بناء وتشييد">تقني بناء وتشييد</option>
+                                            <option value="تقني تدفئة وتكييف">تقني تدفئة وتكييف</option>
+                                            <option value="تقني سيارات">تقني سيارات</option>
+                                        </optgroup>
+                                        <optgroup label="الإداري والتجاري">
+                                            <option value="إدارة أعمال">إدارة أعمال</option>
+                                            <option value="محاسبة">محاسبة</option>
+                                            <option value="سكرتارية">سكرتارية</option>
+                                            <option value="تسويق">تسويق</option>
+                                        </optgroup>
+                                        <optgroup label="الصحي">
+                                            <option value="صحي تمريض">صحي تمريض</option>
+                                            <option value="صحي صيدلة">صحي صيدلة</option>
+                                            <option value="صحي مختبرات">صحي مختبرات</option>
+                                            <option value="صحي أشعة">صحي أشعة</option>
+                                        </optgroup>
+                                        <optgroup label="الزراعي">
+                                            <option value="زراعي عام">زراعي عام</option>
+                                            <option value="إنتاج حيواني">إنتاج حيواني</option>
+                                            <option value="إنتاج نباتي">إنتاج نباتي</option>
+                                        </optgroup>
+                                        <optgroup label="الفندقي">
+                                            <option value="فندقي وسياحة">فندقي وسياحة</option>
+                                            <option value="إدارة المطاعم">إدارة المطاعم</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">سنة التخرج (هجري)</label>
+                                    <input type="text" name="سنة_التخرج_هجري" required 
+                                           placeholder="هـ 1445">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">المعدل / النسبة</label>
+                                    <input type="number" name="المعدل" step="0.01" min="50" max="100" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>درجة اختبار القدرات</label>
+                                    <input type="number" name="درجة_القدرات" step="0.01" min="0" max="100">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>درجة اختبار التحصيلي</label>
+                                    <input type="number" name="درجة_التحصيلي" step="0.01" min="0" max="100">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- حقل طالب حالّي -->
+                        <div class="form-fields-container hidden" id="currentStudentFields">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>للطلاب الحاليين:</strong> أدخل بياناتك الحالية في الكلية
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">الرقم الأكاديمي</label>
+                                    <input type="text" name="الرقم_الأكاديمي_حالي" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">الفصل الحالي</label>
+                                    <input type="text" name="الفصل_الحالي" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">المعدل التراكمي</label>
+                                    <input type="number" name="المعدل_التراكمي_حالي" step="0.01" min="0" max="5" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required">التخصص الحالي</label>
+                                <select name="التخصص_الحالي" required>
+                                    <option value="">اختر التخصص الحالي</option>
+                                    <!-- نفس تخصصات الكلية التقنية -->
+                                    <optgroup label="التقنية الإدارية">
+                                        <option value="إدارة مكتبية">إدارة مكتبية</option>
+                                        <option value="محاسبة">محاسبة</option>
+                                        <option value="إدارة سجلات طبية">إدارة سجلات طبية</option>
+                                    </optgroup>
+                                    <optgroup label="الحاسب وتقنية المعلومات">
+                                        <option value="دعم فني">دعم فني</option>
+                                        <option value="شبكات">شبكات</option>
+                                        <option value="برمجة">برمجة</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- حقل منقول -->
+                        <div class="form-fields-container hidden" id="transferStudentFields">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>للمنقولين:</strong> أدخل بياناتك من الكلية السابقة
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">الكلية / الجامعة السابقة</label>
+                                    <input type="text" name="الكلية_السابقة" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">التخصص السابق</label>
+                                    <input type="text" name="التخصص_السابق" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">المعدل التراكمي</label>
+                                    <input type="number" name="المعدل_التراكمي_نقل" step="0.01" min="0" max="5" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">الساعات المنجزة</label>
+                                    <input type="number" name="الساعات_المنجزة" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- الرغبات والتخصصات -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-list-ol"></i>
+                            <span>الرغبات والتخصصات</span>
+                        </div>
+                        
+                        <div class="form-fields-container">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">الكلية التقنية المفضلة</label>
+                                    <select name="الكلية_التقنية" required>
+                                        <option value="">اختر الكلية</option>
+                                        <!-- جميع كليات التقنية في المملكة -->
+                                        <optgroup label="منطقة الرياض">
+                                            <option value="الرياض">الكلية التقنية بالرياض</option>
+                                            <option value="الخرج">الكلية التقنية بالخرج</option>
+                                            <option value="الدوادمي">الكلية التقنية بالدوادمي</option>
+                                            <option value="الزلفي">الكلية التقنية بالزلفي</option>
+                                            <option value="المجمعة">الكلية التقنية بالمجمعة</option>
+                                            <option value="شقراء">الكلية التقنية بشقراء</option>
+                                            <option value="القويعية">الكلية التقنية بالقويعية</option>
+                                            <option value="وادي الدواسر">الكلية التقنية بوادي الدواسر</option>
+                                            <option value="الأفلاج">الكلية التقنية بالأفلاج</option>
+                                        </optgroup>
+                                        <optgroup label="منطقة مكة المكرمة">
+                                            <option value="مكة">الكلية التقنية بمكة المكرمة</option>
+                                            <option value="جدة">الكلية التقنية بجدة</option>
+                                            <option value="الطائف">الكلية التقنية بالطائف</option>
+                                            <option value="القنفذة">الكلية التقنية بالقنفذة</option>
+                                        </optgroup>
+                                        <optgroup label="منطقة المدينة المنورة">
+                                            <option value="المدينة">الكلية التقنية بالمدينة المنورة</option>
+                                            <option value="ينبع">الكلية التقنية بينبع</option>
+                                        </optgroup>
+                                        <optgroup label="المنطقة الشرقية">
+                                            <option value="الدمام">الكلية التقنية بالدمام</option>
+                                            <option value="الأحساء">الكلية التقنية بالأحساء</option>
+                                            <option value="الجبيل">الكلية التقنية بالجبيل</option>
+                                            <option value="بقيق">الكلية التقنية ببقيق</option>
+                                            <option value="حفر الباطن">الكلية التقنية بحفر الباطن</option>
+                                        </optgroup>
+                                        <optgroup label="منطقة القصيم">
+                                            <option value="بريدة">الكلية التقنية ببريدة</option>
+                                            <option value="عنيزة">الكلية التقنية بعنيزة</option>
+                                            <option value="المذنب">الكلية التقنية بالمذنب</option>
+                                            <option value="الرس">الكلية التقنية بالرس</option>
+                                        </optgroup>
+                                        <optgroup label="منطقة عسير">
+                                            <option value="أبها">الكلية التقنية بأبها</option>
+                                            <option value="خميس مشيط">الكلية التقنية بخميس مشيط</option>
+                                            <option value="النماص">الكلية التقنية بالنماص</option>
+                                            <option value="بللسمر">الكلية التقنية ببللسمر</option>
+                                        </optgroup>
+                                        <optgroup label="منطقة تبوك">
+                                            <option value="تبوك">الكلية التقنية بتبوك</option>
+                                            <option value="الوجه">الكلية التقنية بالوجه</option>
+                                            <option value="ضباء">الكلية التقنية بضباء</option>
+                                        </optgroup>
+                                        <optgroup label="منطقة حائل">
+                                            <option value="حائل">الكلية التقنية بحائل</option>
+                                            <option value="الغزالة">الكلية التقنية بالغزالة</option>
+                                        </optgroup>
+                                        <optgroup label="مناطق أخرى">
+                                            <option value="جازان">الكلية التقنية بجازان</option>
+                                            <option value="نجران">الكلية التقنية بنجران</option>
+                                            <option value="الباحة">الكلية التقنية بالباحة</option>
+                                            <option value="الجوف">الكلية التقنية بالجوف</option>
+                                            <option value="الحدود الشمالية">الكلية التقنية بالحدود الشمالية</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="required">نوع الدراسة</label>
+                                    <select name="نوع_الدراسة" required>
+                                        <option value="">اختر نوع الدراسة</option>
+                                        <option value="منتظم">منتظم</option>
+                                        <option value="انتساب">انتساب</option>
+                                        <option value="تعليم عن بعد">تعليم عن بعد</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>ملاحظة:</strong> يرجى اختيار التخصصات المناسبة لمؤهلك وجنسك
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">الرغبة الأولى</label>
+                                    <select name="الرغبة_الأولى" required>
+                                        <option value="">اختر التخصص</option>
+                                        <!-- التقنية الإدارية -->
+                                        <optgroup label="التقنية الإدارية">
+                                            <option value="دبلوم الإدارة المكتبية">دبلوم الإدارة المكتبية</option>
+                                            <option value="دبلوم السكرتارية الطبية">دبلوم السكرتارية الطبية</option>
+                                            <option value="دبلوم السكرتارية التنفيذية">دبلوم السكرتارية التنفيذية</option>
+                                            <option value="دبلوم إدارة المستودعات">دبلوم إدارة المستودعات</option>
+                                            <option value="دبلوم إدارة المكاتب">دبلوم إدارة المكاتب</option>
+                                            <option value="دبلوم السكرتارية وإدارة المكاتب">دبلوم السكرتارية وإدارة المكاتب</option>
+                                            <option value="دبلوم المحاسبة">دبلوم المحاسبة</option>
+                                            <option value="دبلوم المحاسبة المالية">دبلوم المحاسبة المالية</option>
+                                            <option value="دبلوم المحاسبة الضريبية">دبلوم المحاسبة الضريبية</option>
+                                            <option value="دبلوم السكرتارية والمحاسبة">دبلوم السكرتارية والمحاسبة</option>
+                                            <option value="دبلوم إدارة الأعمال">دبلوم إدارة الأعمال</option>
+                                            <option value="دبلوم التسويق">دبلوم التسويق</option>
+                                            <option value="دبلوم الإدارة المالية">دبلوم الإدارة المالية</option>
+                                        </optgroup>
+                                        <!-- الحاسب وتقنية المعلومات -->
+                                        <optgroup label="الحاسب وتقنية المعلومات">
+                                            <option value="دبلوم دعم فني للحاسب الآلي">دبلوم دعم فني للحاسب الآلي</option>
+                                            <option value="دبلوم شبكات الحاسب الآلي">دبلوم شبكات الحاسب الآلي</option>
+                                            <option value="دبلوم برمجة وتطوير الويب">دبلوم برمجة وتطوير الويب</option>
+                                            <option value="دبلوم برمجة تطبيقات الجوال">دبلوم برمجة تطبيقات الجوال</option>
+                                            <option value="دبلوم أمن المعلومات">دبلوم أمن المعلومات</option>
+                                            <option value="دبلوم قواعد البيانات">دبلوم قواعد البيانات</option>
+                                            <option value="دبلوم تحليل النظم">دبلوم تحليل النظم</option>
+                                            <option value="دبلوم إدارة شبكات">دبلوم إدارة شبكات</option>
+                                            <option value="دبلوم تطوير البرمجيات">دبلوم تطوير البرمجيات</option>
+                                            <option value="دبلوم الذكاء الاصطناعي">دبلوم الذكاء الاصطناعي</option>
+                                            <option value="دبلوم علم البيانات">دبلوم علم البيانات</option>
+                                            <option value="دبلوم أمن سيبراني">دبلوم أمن سيبراني</option>
+                                        </optgroup>
+                                        <!-- التقنية الكهربائية -->
+                                        <optgroup label="التقنية الكهربائية">
+                                            <option value="بكالوريوس القوى الكهربائية">بكالوريوس القوى الكهربائية (تطبيقي)</option>
+                                            <option value="دبلوم التركيبات الكهربائية">دبلوم التركيبات الكهربائية</option>
+                                            <option value="دبلوم صيانة الأجهزة الكهربائية">دبلوم صيانة الأجهزة الكهربائية</option>
+                                            <option value="دبلوم توزيع الطاقة الكهربائية">دبلوم توزيع الطاقة الكهربائية</option>
+                                            <option value="دبلوم التحكم الآلي">دبلوم التحكم الآلي</option>
+                                            <option value="دبلوم الإلكترونيات الصناعية">دبلوم الإلكترونيات الصناعية</option>
+                                            <option value="دبلوم الأنظمة الكهربائية في المباني">دبلوم الأنظمة الكهربائية في المباني</option>
+                                        </optgroup>
+                                        <!-- التقنية الإلكترونية -->
+                                        <optgroup label="التقنية الإلكترونية">
+                                            <option value="دبلوم الإلكترونيات الصناعية">دبلوم الإلكترونيات الصناعية</option>
+                                            <option value="دبلوم أجهزة القياس والتحكم">دبلوم أجهزة القياس والتحكم</option>
+                                            <option value="دبلوم الاتصالات الإلكترونية">دبلوم الاتصالات الإلكترونية</option>
+                                            <option value="دبلوم الأجهزة الطبية">دبلوم الأجهزة الطبية</option>
+                                            <option value="دبلوم صيانة الأجهزة الإلكترونية">دبلوم صيانة الأجهزة الإلكترونية</option>
+                                            <option value="دبلوم الأنظمة المدمجة">دبلوم الأنظمة المدمجة</option>
+                                            <option value="دبلوم التحكم الصناعي">دبلوم التحكم الصناعي</option>
+                                        </optgroup>
+                                        <!-- التقنية الميكانيكية -->
+                                        <optgroup label="التقنية الميكانيكية">
+                                            <option value="دبلوم تقنية التصنيع">دبلوم تقنية التصنيع</option>
+                                            <option value="دبلوم تقنية المحركات والمركبات">دبلوم تقنية المحركات والمركبات</option>
+                                            <option value="دبلوم تقنية التبريد وتكييف الهواء">دبلوم تقنية التبريد وتكييف الهواء</option>
+                                            <option value="دبلوم الصيانة الميكانيكية">دبلوم الصيانة الميكانيكية</option>
+                                            <option value="دبلوم اللحام">دبلوم اللحام</option>
+                                            <option value="دبلوم السباكة">دبلوم السباكة</option>
+                                            <option value="دبلوم النجارة">دبلوم النجارة</option>
+                                            <option value="دبلوم تشغيل آلات الإنتاج">دبلوم تشغيل آلات الإنتاج</option>
+                                            <option value="دبلوم صيانة المعدات الثقيلة">دبلوم صيانة المعدات الثقيلة</option>
+                                            <option value="دبلوم الميكانيكا العامة">دبلوم الميكانيكا العامة</option>
+                                        </optgroup>
+                                        <!-- التقنية المدنية والمعمارية -->
+                                        <optgroup label="التقنية المدنية والمعمارية">
+                                            <option value="دبلوم تقنية المساحة">دبلوم تقنية المساحة</option>
+                                            <option value="دبلوم الرسم المعماري">دبلوم الرسم المعماري</option>
+                                            <option value="دبلوم الإنشاءات المدنية">دبلوم الإنشاءات المدنية</option>
+                                            <option value="دبلوم التخطيط العمراني">دبلوم التخطيط العمراني</option>
+                                            <option value="دبلوم الدهانات والديكور">دبلوم الدهانات والديكور</option>
+                                            <option value="دبلوم التشطيبات المعمارية">دبلوم التشطيبات المعمارية</option>
+                                            <option value="دبلوم التصميم الداخلي">دبلوم التصميم الداخلي</option>
+                                            <option value="دبلوم البناء والتشييد">دبلوم البناء والتشييد</option>
+                                        </optgroup>
+                                        <!-- تخصصات البنات -->
+                                        <optgroup label="تخصصات البنات">
+                                            <option value="دبلوم السياحة والفنادق">دبلوم السياحة والفنادق</option>
+                                            <option value="دبلوم إدارة الفعاليات">دبلوم إدارة الفعاليات</option>
+                                            <option value="دبلوم التسويق الرقمي">دبلوم التسويق الرقمي</option>
+                                            <option value="دبلوم التصميم الجرافيكي">دبلوم التصميم الجرافيكي</option>
+                                            <option value="دبلوم إدارة الأعمال الصغيرة">دبلوم إدارة الأعمال الصغيرة</option>
+                                            <option value="دبلوم التجميل والعناية بالبشرة">دبلوم التجميل والعناية بالبشرة</option>
+                                            <option value="دبلوم تصميم الأزياء">دبلوم تصميم الأزياء</option>
+                                            <option value="دبلوم الخياطة والتطريز">دبلوم الخياطة والتطريز</option>
+                                            <option value="دبلوم التغذية الصحية">دبلوم التغذية الصحية</option>
+                                            <option value="دبلوم رعاية الطفل">دبلوم رعاية الطفل</option>
+                                            <option value="دبلوم الإرشاد الأسري">دبلوم الإرشاد الأسري</option>
+                                            <option value="دبلوم التربية الخاصة">دبلوم التربية الخاصة</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>الرغبة الثانية (اختياري)</label>
+                                    <select name="الرغبة_الثانية">
+                                        <option value="">اختر التخصص (اختياري)</option>
+                                        <!-- نفس القائمة السابقة -->
+                                        <optgroup label="التقنية الإدارية">
+                                            <option value="دبلوم الإدارة المكتبية">دبلوم الإدارة المكتبية</option>
+                                            <option value="دبلوم السكرتارية الطبية">دبلوم السكرتارية الطبية</option>
+                                        </optgroup>
+                                        <!-- اختصار القائمة -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- زر الإرسال -->
+                    <div class="button-container">
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>إرسال الطلب</span>
+                        </button>
+                        <div id="loadingIndicator" style="display: none; margin-top: 15px;">
+                            <div class="loading"></div>
+                            <span>جاري إرسال الطلب...</span>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         
-        <!-- الفوتر -->
+        <!-- الفوتر مع معلومات التواصل -->
         <div class="footer">
-            <p>© 2024 الكلية التقنية - جميع الحقوق محفوظة</p>
-            <p>للاستفسار: <a href="mailto:info@tvtc.edu.sa">info@tvtc.edu.sa</a> | <a href="tel:+966112345678">+966112345678</a></p>
+            <div>جميع الحقوق محفوظة &copy; الكلية التقنية 1445هـ</div>
+            <div>للاستفسارات، يرجى الاتصال على: <a href="mailto:info@tvtc.gov.sa">info@tvtc.gov.sa</a></div>
+            
+            <div class="contact-info">
+                <div>للتواصل عبر واتساب:</div>
+                <a href="https://wa.me/966583287165" class="whatsapp-contact" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+966 58 328 7165</span>
+                </a>
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 12px; color: #888;">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>يتم الرد على الاستفسارات خلال 24-48 ساعة عمل</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // ===== التهيئة الأولية =====
+        // ===== تهيئة العناصر الأساسية =====
         document.addEventListener('DOMContentLoaded', function() {
-            updateProgressBar();
-            setupEventListeners();
-        });
-        
-        // ===== تحديث شريط التقدم =====
-        function updateProgressBar() {
+            const applicantTypes = document.querySelectorAll('.applicant-type');
+            const applicantTypeInput = document.getElementById('applicantType');
             const progressFill = document.getElementById('progressFill');
-            const filledSections = 4; // الأقسام المكتملة افتراضياً
-            const totalSections = 5; // إجمالي الأقسام
-            const progress = (filledSections / totalSections) * 100;
-            progressFill.style.width = `${progress}%`;
-        }
-        
-        // ===== إعداد مستمعي الأحداث =====
-        function setupEventListeners() {
-            // اختيار نوع المتقدم
-            document.querySelectorAll('.applicant-type').forEach(type => {
-                type.addEventListener('click', function() {
-                    // إزالة التحديد من الكل
-                    document.querySelectorAll('.applicant-type').forEach(t => t.classList.remove('selected'));
-                    // إضافة التحديد للعنصر المختار
-                    this.classList.add('selected');
-                    
-                    const applicantType = this.getAttribute('data-type');
-                    document.getElementById('applicantType').value = applicantType;
-                    
-                    // عرض الحقول المناسبة
-                    showRelevantFields(applicantType);
-                });
-            });
+            const form = document.getElementById('registrationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const successMessage = document.getElementById('successMessage');
+            const formContainer = document.getElementById('formContainer');
+            const replyToEmail = document.getElementById('replyToEmail');
+            const emailInput = document.getElementById('email');
             
-            // منع ظهور التقويم لحقول التاريخ
-            preventDatePicker();
-            
-            // ربط المنطقة بالمدينة
-            setupCityRegionLink();
-        }
-        
-        // ===== ربط المنطقة بالمدينة =====
-        function setupCityRegionLink() {
-            const regionSelect = document.querySelector('select[name="المنطقة"]');
-            const citySelect = document.querySelector('select[name="المدينة"]');
-            
-            regionSelect.addEventListener('change', function() {
-                const region = this.value;
-                // تم تجميع المدن بالفعل في optgroups، يمكن إضافة منطق إضافي هنا إذا لزم الأمر
-            });
-        }
-        
-        // ===== عرض الحقول المناسبة حسب نوع المتقدم =====
-        function showRelevantFields(type) {
-            // إخفاء جميع الحقول أولاً
-            document.getElementById('newStudentFields').classList.add('hidden');
-            document.getElementById('currentStudentFields').classList.add('hidden');
-            document.getElementById('transferStudentFields').classList.add('hidden');
-            
-            // إظهار الحقول المناسبة
-            if (type === 'new') {
-                document.getElementById('newStudentFields').classList.remove('hidden');
+            // ===== إظهار الحقول المناسبة حسب نوع المتقدم =====
+            function showFieldsForType(type) {
+                // إخفاء جميع الحقول الأكاديمية
+                document.getElementById('newStudentFields').classList.add('hidden');
+                document.getElementById('currentStudentFields').classList.add('hidden');
+                document.getElementById('transferStudentFields').classList.add('hidden');
                 
-                // جعل الحقول مطلوبة
-                document.querySelector('select[name="نوع_المؤهل"]').required = true;
-                document.querySelector('select[name="تخصص_الثانوية"]').required = true;
-                document.querySelector('input[name="سنة_التخرج_هجري"]').required = true;
-                document.querySelector('input[name="المعدل"]').required = true;
-            } 
-            else if (type === 'current') {
-                document.getElementById('currentStudentFields').classList.remove('hidden');
-                
-                // إلغاء إلزامية بعض الحقول
-                document.querySelector('select[name="نوع_المؤهل"]').required = false;
-                document.querySelector('select[name="تخصص_الثانوية"]').required = false;
-            }
-            else if (type === 'transfer') {
-                document.getElementById('transferStudentFields').classList.remove('hidden');
-                
-                // إلغاء إلزامية بعض الحقول
-                document.querySelector('select[name="نوع_المؤهل"]').required = false;
-                document.querySelector('select[name="تخصص_الثانوية"]').required = false;
-            }
-        }
-        
-        // ===== منع ظهور التقويم =====
-        function preventDatePicker() {
-            document.addEventListener('focus', function(e) {
-                if (e.target.type === 'text' && 
-                    (e.target.name === 'تاريخ_الميلاد_هجري' || 
-                     e.target.name === 'تاريخ_الميلاد_ميلادي' ||
-                     e.target.name === 'سنة_التخرج_هجري')) {
-                    e.target.setAttribute('readonly', true);
-                    setTimeout(() => {
-                        e.target.removeAttribute('readonly');
-                    }, 100);
+                // إظهار الحقول المناسبة
+                if (type === 'new') {
+                    document.getElementById('newStudentFields').classList.remove('hidden');
+                } else if (type === 'current') {
+                    document.getElementById('currentStudentFields').classList.remove('hidden');
+                } else if (type === 'transfer') {
+                    document.getElementById('transferStudentFields').classList.remove('hidden');
                 }
-            }, true);
-        }
-        
-        // ===== التحقق من الرغبات =====
-        function validateWishes() {
-            const wish1 = document.querySelector('select[name="الرغبة_الأولى"]').value;
-            const wish2 = document.querySelector('select[name="الرغبة_الثانية"]').value;
-            
-            if (wish1 && wish2 && wish1 === wish2) {
-                showError('لا يمكن اختيار نفس التخصص في الرغبة الأولى والثانية');
-                return false;
+                
+                // تحديث شريط التقدم
+                updateProgressBar();
+                
+                // تحديث قيمة الحقل المخفي
+                applicantTypeInput.value = type;
             }
             
-            return true;
-        }
-        
-        // ===== عرض رسالة الخطأ =====
-        function showError(message) {
-            alert(`❌ ${message}`);
-        }
-        
-        // ===== توليد رقم الطلب =====
-        function generateRequestNumber() {
-            const year = new Date().getFullYear();
-            const randomNum = Math.floor(100000 + Math.random() * 900000);
-            return `TVTC-${year}-${randomNum}`;
-        }
-        
-        // ===== إرسال النموذج =====
-        const form = document.getElementById('registrationForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const successMessage = document.getElementById('successMessage');
-        const requestNumber = document.getElementById('requestNumber');
-        
-        form.addEventListener('submit', async function (event) {
-            event.preventDefault();
-            
-            // التحقق من الرغبات
-            if (!validateWishes()) {
-                return;
-            }
-            
-            // تعطيل زر الإرسال
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
-            
-            try {
-                const formData = new FormData(form);
+            // ===== تحديث شريط التقدم =====
+            function updateProgressBar() {
+                let progress = 0;
                 
-                // إضافة معلومات إضافية
-                const timestamp = new Date().toISOString();
-                formData.append('timestamp', timestamp);
-                formData.append('user_agent', navigator.userAgent);
+                // حساب النسبة بناءً على إكمال الحقول
+                const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
+                let filledFields = 0;
                 
-                // إرسال البيانات إلى Formspree
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
+                requiredFields.forEach(field => {
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        if (field.checked) filledFields++;
+                    } else {
+                        if (field.value.trim() !== '') filledFields++;
                     }
                 });
                 
-                if (response.ok) {
-                    // نجاح الإرسال
-                    const reqNum = generateRequestNumber();
-                    requestNumber.textContent = reqNum;
-                    
-                    // إظهار رسالة النجاح
-                    successMessage.style.display = 'block';
-                    form.style.display = 'none';
-                    
-                    // تحديث شريط التقدم
-                    document.getElementById('progressFill').style.width = '100%';
-                    
-                    // إعادة تعيين النموذج بعد 15 ثانية
-                    setTimeout(() => {
-                        form.reset();
-                        form.style.display = 'block';
-                        successMessage.style.display = 'none';
-                        
-                        // إعادة تعيين نوع المتقدم
-                        document.querySelector('.applicant-type[data-type="new"]').click();
-                        
-                        // إعادة تعيين زر الإرسال
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> تقديم طلب التسجيل';
-                        
-                        // إعادة شريط التقدم
-                        updateProgressBar();
-                    }, 15000);
-                } else {
-                    throw new Error('فشل في الإرسال');
+                if (requiredFields.length > 0) {
+                    progress = Math.min((filledFields / requiredFields.length) * 100, 100);
                 }
-            } catch (error) {
-                showError('حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> تقديم طلب التسجيل';
+                
+                progressFill.style.width = progress + '%';
             }
+            
+            // ===== إضافة مستمعي الأحداث =====
+            
+            // حدث اختيار نوع المتقدم
+            applicantTypes.forEach(type => {
+                type.addEventListener('click', function() {
+                    // إزالة التحديد من جميع الأنواع
+                    applicantTypes.forEach(t => t.classList.remove('selected'));
+                    
+                    // إضافة التحديد للنوع المختار
+                    this.classList.add('selected');
+                    
+                    // إظهار الحقول المناسبة
+                    const selectedType = this.getAttribute('data-type');
+                    showFieldsForType(selectedType);
+                });
+            });
+            
+            // حدث تغيير في الحقول (لشريط التقدم)
+            form.addEventListener('input', updateProgressBar);
+            form.addEventListener('change', updateProgressBar);
+            
+            // تحديث حقل الرد على البريد الإلكتروني عند التغيير
+            emailInput.addEventListener('input', function() {
+                replyToEmail.value = this.value;
+            });
+            
+            // ===== التحقق من النموذج وإرساله =====
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // التحقق من صحة النموذج
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+                
+                // إظهار مؤشر التحميل
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>جاري الإرسال...</span>';
+                loadingIndicator.style.display = 'block';
+                
+                try {
+                    // إرسال النموذج إلى Formspree
+                    const formData = new FormData(form);
+                    
+                    // إضافة بيانات إضافية إذا لزم الأمر
+                    formData.append('timestamp', new Date().toISOString());
+                    formData.append('user_agent', navigator.userAgent);
+                    
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        // إخفاء النموذج وإظهار رسالة النجاح
+                        formContainer.style.display = 'none';
+                        successMessage.style.display = 'block';
+                        
+                        // تحديث شريط التقدم إلى 100%
+                        progressFill.style.width = '100%';
+                        
+                        // إضافة رسالة في الـ console للتتبع
+                        console.log('تم إرسال النموذج بنجاح إلى Formspree');
+                        console.log('سيتم إرسال البيانات إلى البريد الإلكتروني المحدد');
+                    } else {
+                        throw new Error('فشل إرسال النموذج');
+                    }
+                } catch (error) {
+                    // إعادة تمكين زر الإرسال
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i><span>إرسال الطلب</span>';
+                    loadingIndicator.style.display = 'none';
+                    
+                    // إظهار رسالة خطأ
+                    alert('حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى.');
+                    console.error('خطأ في إرسال النموذج:', error);
+                }
+            });
+            
+            // ===== التهيئة الأولية =====
+            // إظهار الحقول لخريج الثانوية الجديد (النوع الافتراضي)
+            showFieldsForType('new');
+            
+            // تحديث شريط التقدم
+            updateProgressBar();
+            
+            // ===== التحقق من تكوين Formspree =====
+            console.log('============================================');
+            console.log('معلومات تكوين Formspree:');
+            console.log('نقطة نهاية API:', form.action);
+            console.log('============================================');
+            console.log('ملاحظة: تأكد من أن عنوان Formspree صحيح وأنك قمت بتفعيله');
+            console.log('لتلقي البيانات على بريدك الإلكتروني.');
+            console.log('============================================');
         });
     </script>
 </body>
-    </html>
+                                                                             </html>
