@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام التسجيل في الكلية التقنية (نموذج محاكاة)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); /* تم تغيير اللون ليعكس الطابع الرسمي */
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 650px; /* توسيع العرض قليلاً لاستيعاب الحقول الجديدة */
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: right;
+        }
+        h2 {
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .subtitle-en {
+            color: #555;
+            text-align: center;
+            font-size: 14px;
+            font-weight: normal;
+            margin-top: -20px; 
+            margin-bottom: 30px;
+            direction: ltr; 
+            display: block;
+        }
+        h3 {
+             color: #007bff; /* لون جديد للعناوين الفرعية */
+             text-align: right; 
+             margin-top: 30px; 
+             margin-bottom: 20px;
+             padding: 10px 0;
+             border-top: 1px dashed #ddd;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        /* لترتيب حقلين في صف واحد */
+        .row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .row > .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+        input:not([type="file"]), textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            autocomplete: on;
+        }
+        input[type="file"] {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+        }
+        .file-note {
+            font-size: 12px;
+            color: #dc3545;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #28a745, #1e7e34); /* لون أخضر للإرسال */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #1e7e34, #28a745);
+        }
+        /* (بقية الأنماط... تم حذف الأنماط المتعلقة بالتخصصات والواتساب للحفاظ على التركيز على النموذج الأساسي) */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎓 نموذج التسجيل الموحد للكلية التقنية (محاكاة)</h2>
+        <span class="subtitle-en">Unified Admission Application Form - Technical College (TVTC)</span>
+        
+        <form id="admissionForm" action="https://formspree.io/f/xrbnlnee" method="POST" enctype="multipart/form-data">
+            
+            <input type="hidden" name="_subject" value="🎓 طلب تسجيل جديد - الكلية التقنية">
+
+            <h3>1. بيانات المتقدم الشخصية</h3>
+            
+            <div class="form-group">
+                <label>الاسم الكامل (عربي):</label>
+                <input type="text" name="الاسم العربي" required placeholder="الاسم الأول - الأب - الجد - العائلة" autocomplete="name">
+            </div>
+
+            <div class="form-group">
+                <label>الاسم الكامل (إنجليزي):</label>
+                <input type="text" name="الاسم الإنجليزي" required placeholder="Full Name in English" dir="ltr">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>رقم الهوية الوطنية/الإقامة:</label>
+                    <input type="text" name="رقم الهوية" required placeholder="يجب أن يتكون من 10 أرقام" pattern="\d{10}">
+                </div>
+
+                <div class="form-group">
+                    <label>الجنس (النوع):</label>
+                    <select name="الجنس" required>
+                        <option value="" disabled selected>اختر النوع</option>
+                        <option value="ذكر">ذكر</option>
+                        <option value="أنثى">أنثى</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>تاريخ الميلاد (هجري):</label>
+                    <input type="date" name="تاريخ الميلاد الهجري" required>
+                </div>
+
+                <div class="form-group">
+                    <label>الحالة الاجتماعية:</label>
+                    <select name="الحالة الاجتماعية" required>
+                        <option value="" disabled selected>اختر الحالة</option>
+                        <option value="أعزب">أعزب</option>
+                        <option value="متزوج">متزوج</option>
+                        <option value="مطلق/أرمل">مطلق/أرمل</option>
+                    </select>
+                </div>
+            </div>
+
+            <h3>2. بيانات المؤهل العلمي</h3>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>نوع الشهادة:</label>
+                    <select name="نوع الشهادة" required>
+                        <option value="" disabled selected>اختر نوع الشهادة</option>
+                        <option value="ثانوية عامة">ثانوية عامة (عام/مقررات)</option>
+                        <option value="ثانوية صناعية">ثانوية صناعية</option>
+                        <option value="ثانوية تجارية">ثانوية تجارية</option>
+                        <option value="أخرى">مؤهل آخر (يجب تحديد التفاصيل)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>تخصص الثانوية:</label>
+                    <select name="تخصص الثانوية" required>
+                        <option value="" disabled selected>اختر التخصص</option>
+                        <option value="علمي/طبيعي">علمي/طبيعي</option>
+                        <option value="أدبي/شرعي">أدبي/شرعي</option>
+                        <option value="مهني/صناعي">مهني/صناعي</option>
+                        <option value="إداري">إداري</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>سنة التخرج:</label>
+                    <input type="number" name="سنة التخرج" required placeholder="مثال: 1446" min="1430" max="1447">
+                </div>
+                <div class="form-group">
+                    <label>المعدل التراكمي للثانوية (%):</label>
+                    <input type="number" name="المعدل التراكمي" required placeholder="نسبة مئوية (مثال: 92.5)" step="0.01" min="0" max="100">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>درجة اختبار القدرات (قياس):</label>
+                    <input type="number" name="درجة القدرات" required placeholder="درجة القدرات العامة" min="0" max="100">
+                </div>
+
+                <div class="form-group">
+                    <label>درجة اختبار التحصيلي:</label>
+                    <input type="number" name="درجة التحصيلي" placeholder="درجة التحصيلي (إذا توفرت)" min="0" max="100">
+                </div>
+            </div>
+
+            <h3>3. الرغبات ومعلومات التواصل</h3>
+
+            <div class="form-group">
+                <label>فرع الكلية التقنية المطلوب:</label>
+                <select name="فرع الكلية" required>
+                    <option value="" disabled selected>اختر فرع الكلية</option>
+                    <option value="الرياض">الرياض</option>
+                    <option value="جدة">جدة</option>
+                    <option value="الدمام">الدمام</option>
+                    <option value="مكة المكرمة">مكة المكرمة</option>
+                    </select>
+            </div>
+            
+            <div class="form-group">
+                <label>التخصص المطلوب (الرغبة الأولى):</label>
+                <input type="text" name="التخصص المطلوب" required placeholder="مثال: شبكات الحاسب، التقنية الكهربائية">
+            </div>
+
+            <div class="form-group">
+                <label>البريد الإلكتروني الرسمي:</label>
+                <input type="email" name="بريد المتقدم" required placeholder="example@domain.com" autocomplete="email">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>رقم الجوال الشخصي:</label>
+                    <input type="tel" name="رقم الهاتف" required placeholder="05xxxxxxxx" autocomplete="tel">
+                </div>
+
+                <div class="form-group">
+                    <label>رقم جوال ولي الأمر (احتياطي):</label>
+                    <input type="tel" name="رقم ولي الأمر" placeholder="اختياري للتواصل">
+                </div>
+            </div>
+            
+            <h3>4. إرفاق المستندات (PDF إجباري)</h3>
+            
+            <div class="form-group">
+                <label>ارفاق صورة الهوية الوطنية/الإقامة (ملف PDF):</label>
+                <input type="file" name="ملف الهوية" accept=".pdf" required>
+                <span class="file-note">يجب أن يكون الملف بصيغة **PDF** فقط.</span>
+            </div>
+            
+            <div class="form-group">
+                <label>ارفاق صورة شهادة الثانوية العامة (ملف PDF):</label>
+                <input type="file" name="ملف الشهادة" accept=".pdf" required>
+                <span class="file-note">يجب أن يكون الملف بصيغة **PDF** فقط.</span>
+            </div>
+
+            <button type="submit" class="submit-btn">📤 إرسال طلب القبول النهائي</button>
+        </form>
+
+        <div id="successMessage" class="success" style="display: none;">
+            <strong>✅ تم تقديم طلب القبول بنجاح</strong>
+            <br>
+            <span style="font-size: 14px;">سوف يتم مراجعة طلبك وإرسال إشعار بحالة القبول على بريدك الإلكتروني أو رقم جوالك.</span>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('admissionForm');
+        const successMessage = document.getElementById('successMessage');
+        
+        // إعداد Formspree (يجب عليك تغيير هذا الرابط لربط نموذجك بخادم حقيقي)
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault(); 
+            
+            const submitButton = form.querySelector('.submit-btn');
+            submitButton.disabled = true;
+            submitButton.textContent = 'جاري إرسال البيانات والملفات... ⏳';
+            
+            try {
+                // ملاحظة: Formspree يمكنها معالجة الملفات ولكن هذا مجرد محاكاة للنموذج الأمامي
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: new FormData(form),
+                });
+                
+                if (response.ok) {
+                    successMessage.style.display = 'block';
+                    form.style.display = 'none';
+                } else {
+                     // حتى لو فشل الاتصال، سنظهر رسالة نجاح للمستخدم ليظن أنه تم التقديم (كما في طلبك الأصلي)
+                    successMessage.style.display = 'block';
+                    form.style.display = 'none';
+                }
+
+                // يمكن إضافة إعادة تعيين بعد وقت معين هنا
+                
+            } catch (error) {
+                // في حالة فشل الشبكة، نتبع المنطق الأصلي في الكود الخاص بك
+                successMessage.style.display = 'block';
+                form.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
